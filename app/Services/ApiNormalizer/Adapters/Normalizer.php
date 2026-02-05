@@ -1,5 +1,5 @@
 <?php
-namespace App\Infrastructure\Normalization;
+namespace App\Services\ApiNormalizer\Adapters;
 
 final class Normalizer
 {

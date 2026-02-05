@@ -1,7 +1,9 @@
 <?php
 
-namespace Contracts\Providers\Sienge;
-class SiengeClient
+namespace App\Services\ApiNormalizer\Providers\Sienge;
+use App\Services\ApiNormalizer\Providers\ProviderClientInterface;
+
+class SiengeClient implements ProviderClientInterface
 {
 
     public function __construct()

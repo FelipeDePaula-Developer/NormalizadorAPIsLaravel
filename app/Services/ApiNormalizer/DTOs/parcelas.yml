@@ -1,0 +1,119 @@
+entity: parcelas
+version: "1.0"
+description: >
+  Entidade normalizada (flat) de parcelas/títulos financeiros,
+  usada como padrão para normalização de múltiplos provedores/APIs.
+
+output:
+  type: array
+  items: parcela
+
+mapping:
+  type: object
+  additionalProperties: false
+  required:
+    - numero_parcela
+    - contrato
+    - codigo_cliente
+    - titulo_data_vcto
+    - titulo_vlr_original
+    - status_parcela
+  fields:
+    numero_parcela:
+      type: string
+      description: "Identificador/número da parcela no provedor de origem."
+
+    codigo_cliente:
+      type: string
+      description: "Identificador do cliente no provedor de origem."
+
+    nome_cliente:
+      type: string
+      description: "Nome do cliente"
+
+    contrato:
+      type: string
+      description: "Identificador/código do contrato relacionado à parcela."
+
+    data_criacao_parcela:
+      type: date
+      format: 'Y-m-d'
+      description: "Data/hora de criação/geração da parcela."
+
+    titulo_data_vcto:
+      type: date
+      format: 'Y-m-d'
+      description: "Data de vencimento da parcela/título."
+
+    titulo_vlr_original:
+      type: number
+      format: decimal
+      description: "Valor original da parcela."
+
+    titulo_vlr_atualizado:
+      type: number
+      format: decimal
+      description: "Valor atualizado da parcela (com correções)."
+
+    titulo_vlr_pago:
+      type: number
+      format: decimal
+      description: "Valor efetivamente pago da parcela."
+
+    titulo_data_pgto:
+      type: string
+      format: 'Y-m-d'
+      description: "Data/hora de pagamento/baixa da parcela."
+
+    tipo_parcela:
+      type: string
+      maxLength: 50
+      description: "Tipo/classificação da parcela (ex.: mensal, entrada, reforço)."
+
+    receita_parcela:
+      type: string
+      maxLength: 10
+      description: "Indicador de receita da parcela conforme regra do provedor."
+
+    status_parcela:
+      type: string
+      maxLength: 30
+      description: >
+        Status normalizado da parcela/título.
+        Ex.: ABERTA, PAGA, VENCIDA, CANCELADA, NEGOCIADA, RENEGOCIADA.
+
+    correcao_monetaria:
+      type: number
+      format: decimal
+      description: "Valor de correção monetária aplicado à parcela."
+
+    titulo_vlr_juros:
+      type: number
+      format: decimal
+      description: "Valor de juros aplicados à parcela."
+
+    dias_inadimplente:
+      type: number
+      format: decimal
+      description: "Dias inadimplente"
+
+    titulo_vlr_mora_juros:
+      type: number
+      format: decimal
+      description: "Valor de juros de mora da parcela."
+
+    titulo_vlr_multa:
+      type: number
+      format: decimal
+      description: "Valor de multa aplicado à parcela."
+
+    titulo_vlr_desc:
+      type: number
+      format: decimal
+      description: "Valor de desconto aplicado à parcela."
+
+meta:
+  notes:
+    - "Schema define somente a estrutura normalizada; regras de conversão ficam por provedor."
+    - "Campos opcionais devem ser preenchidos com null quando indisponíveis."
+    - "Valores monetários devem ser normalizados para decimal padrão do sistema."

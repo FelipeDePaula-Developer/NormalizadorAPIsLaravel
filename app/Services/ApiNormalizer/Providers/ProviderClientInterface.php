@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Services\ApiNormalizer\Providers\Sienge;
+namespace App\Services\ApiNormalizer\Providers;
 
 interface ProviderClientInterface
 {

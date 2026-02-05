@@ -1,6 +1,6 @@
 <?php
 
-namespace Adapters;
+namespace App\Services\ApiNormalizer\Adapters\Loader;
 use Symfony\Component\Yaml\Yaml;
 
 final class YamlContractLoader
