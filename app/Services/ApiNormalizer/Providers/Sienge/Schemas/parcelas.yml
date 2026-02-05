@@ -1,0 +1,99 @@
+provider: sienge
+endpoint_key: bulk-data-defaulters-receivable-bills-v1
+method: GET
+
+response:
+  root: "data"                                  # { data: [...] }
+  items_path:
+    principalPath: data[defaulterInstallments] # array de parcelas (installments)
+    complementPath: [data]
+
+canonical:
+  entity: Parcela
+  schema: "src/Domain/Canonical/schemas/parcelas.yml"
+
+mapping:
+  entity: Parcela
+  fields:
+    clientId:
+      type: integer
+      required: true
+      field: codigo_cliente
+
+    receivableBillId:
+      type: integer
+      required: true
+      field: contrato
+
+    # (opcional) se você quiser também o nome do cliente
+    clientName:
+      type: string
+      required: false
+      field: nome_cliente
+
+    # ===== Campos do FILHO (defaulterInstallments[]) =====
+    installmentId:
+      type: integer
+      required: true
+      field: numero_parcela
+
+    conditionType:
+      type: string
+      required: false
+
+    dueDate:
+      type: date
+      format: "Y-m-d"
+      required: true
+      field: titulo_data_vcto
+
+    daysOfDelay:
+      type: integer
+      required: false
+      field: dias_inadimplente
+
+    correctedValueWithoutAdditions:
+      type: decimal
+      required: false
+      field: titulo_vlr_original
+
+    proRata:
+      type: decimal
+      required: false
+
+    interest:
+      type: decimal
+      required: false
+      field: titulo_vlr_juros
+
+    fine:
+      type: decimal
+      required: false
+      field: titulo_vlr_multa
+
+    totalAdditions:
+      type: decimal
+      required: false
+
+    correctedValueWithAdditions:
+      type: decimal
+      required: false
+      field: titulo_vlr_atualizado
+
+    installmentNumber:
+      type: string
+      required: false
+
+    installmentSentToSPCSerasa:
+      type: string
+      required: false
+
+casts:
+  decimal:
+    normalize:
+      - trim
+      - replace: { from: ".", to: "" }
+      - replace: { from: ",", to: "." }
+  date:
+    normalize:
+      - trim
