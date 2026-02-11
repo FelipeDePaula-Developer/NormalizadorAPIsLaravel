@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\ApiNormalizer\Adapters;
 
+use App\Services\ApiNormalizer\Adapters\Casters\Cast;
+
 final class Normalizer
 {
     public function normalizeItems(array $rawResponse, array $endpointContract, array $canonicalSchema): array

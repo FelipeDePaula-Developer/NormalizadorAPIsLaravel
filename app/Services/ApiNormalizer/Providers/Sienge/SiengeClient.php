@@ -10,7 +10,7 @@ class SiengeClient implements ProviderClientInterface
     {
     }
 
-    public function callAPI($method = '', $url = '', $data = '', $mock = false)
+    public function request($method = '', $url = '', $data = '', $mock = false)
     {
         if ($mock) {
             return [

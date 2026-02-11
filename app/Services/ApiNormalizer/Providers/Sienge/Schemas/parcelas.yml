@@ -10,7 +10,7 @@ response:
 
 canonical:
   entity: Parcela
-  schema: "src/Domain/Canonical/schemas/parcelas.yml"
+  schema: '\app\Services\ApiNormalizer\DTOs\parcelas.yml'
 
 mapping:
   entity: Parcela
