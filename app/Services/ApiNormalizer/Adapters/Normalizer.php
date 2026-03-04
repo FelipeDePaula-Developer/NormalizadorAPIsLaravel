@@ -13,7 +13,9 @@ final class Normalizer
         }
 
         $extractor = new PathExtractor();
-        $rawItems = $extractor->extractItems($rawResponse, $itemsPath);
+        $rawItems = $extractor->extractItems($rawResponse, $itemsPath, $endpointContract['response']['root']);
+        dd($rawItems);
+        die('AQ');
         $mappingFields = $endpointContract['mapping']['fields'] ?? [];
         if (!is_array($mappingFields)) $mappingFields = [];
 

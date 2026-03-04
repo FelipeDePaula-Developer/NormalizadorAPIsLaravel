@@ -1,5 +1,5 @@
-provider: sienge
-endpoint_key: bulk-data-defaulters-receivable-bills-v1
+provider: mockAPI
+path: bulk-data-defaulters
 method: GET
 
 response:
