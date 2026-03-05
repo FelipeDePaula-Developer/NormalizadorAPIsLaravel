@@ -1,0 +1,109 @@
+{
+    "entity": "clientes",
+    "version": "1.0",
+    "description": "Entidade normalizada (flat) de clientes, usada como padrão para normalização de múltiplos provedores/APIs.",
+    "output": {
+        "type": "array",
+        "items": "cliente"
+    },
+    "mapping": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+            "codigo_cliente",
+            "nome_cliente"
+        ],
+        "fields": {
+            "codigo_cliente": {
+                "type": "string",
+                "description": "Identificador único do cliente no provedor de origem."
+            },
+            "nome_cliente": {
+                "type": "string",
+                "description": "Nome completo do cliente."
+            },
+            "cpf_cnpj": {
+                "type": "string",
+                "maxLength": 20,
+                "description": "Documento do cliente (CPF ou CNPJ)."
+            },
+            "email": {
+                "type": "string",
+                "maxLength": 120,
+                "description": "Endereço de e-mail do cliente."
+            },
+            "telefone": {
+                "type": "string",
+                "maxLength": 30,
+                "description": "Telefone principal do cliente."
+            },
+            "telefone_secundario": {
+                "type": "string",
+                "maxLength": 30,
+                "description": "Telefone secundário ou alternativo."
+            },
+            "data_nascimento": {
+                "type": "date",
+                "format": "Y-m-d",
+                "description": "Data de nascimento do cliente (quando pessoa física)."
+            },
+            "tipo_pessoa": {
+                "type": "string",
+                "maxLength": 2,
+                "description": "Tipo de pessoa: PF (pessoa física) ou PJ (pessoa jurídica)."
+            },
+            "logradouro": {
+                "type": "string",
+                "maxLength": 150,
+                "description": "Endereço do cliente (logradouro)."
+            },
+            "numero": {
+                "type": "string",
+                "maxLength": 20,
+                "description": "Número do endereço."
+            },
+            "complemento": {
+                "type": "string",
+                "maxLength": 100,
+                "description": "Complemento do endereço."
+            },
+            "bairro": {
+                "type": "string",
+                "maxLength": 100,
+                "description": "Bairro do endereço."
+            },
+            "cidade": {
+                "type": "string",
+                "maxLength": 100,
+                "description": "Cidade do endereço."
+            },
+            "estado": {
+                "type": "string",
+                "maxLength": 2,
+                "description": "UF do endereço."
+            },
+            "cep": {
+                "type": "string",
+                "maxLength": 10,
+                "description": "CEP do endereço."
+            },
+            "data_criacao_cliente": {
+                "type": "date",
+                "format": "Y-m-d",
+                "description": "Data de criação/cadastro do cliente no sistema de origem."
+            },
+            "status_cliente": {
+                "type": "string",
+                "maxLength": 30,
+                "description": "Status normalizado do cliente. Ex.: ATIVO, INATIVO, BLOQUEADO."
+            }
+        }
+    },
+    "meta": {
+        "notes": [
+            "Schema define somente a estrutura normalizada; regras de conversão ficam por provedor.",
+            "Campos opcionais devem ser preenchidos com null quando indisponíveis.",
+            "Documentos (CPF/CNPJ) devem ser normalizados sem máscara."
+        ]
+    }
+}

@@ -1,18 +1,20 @@
 <?php
 namespace App\Services\ApiNormalizer;
+use App\Services\ApiNormalizer\Adapters\Loader\JsonContractLoader;
 use App\Services\ApiNormalizer\Adapters\Loader\YamlContractLoader;
 use App\Services\ApiNormalizer\Adapters\Normalizer;
 use App\Services\ApiNormalizer\Providers\ProviderClientInterface;
 
 final class ApiNormalizerService
 {
-    private YamlContractLoader $loader;
+//    private YamlContractLoader $loader;
+    private JsonContractLoader $loader;
     private Normalizer $normalizer;
     /** @var array<string, ProviderClientInterface> */
     private array $providers;
 
     public function __construct(
-        YamlContractLoader $loader,
+        JsonContractLoader $loader,
         Normalizer $normalizer,
         array $providers
     ) {

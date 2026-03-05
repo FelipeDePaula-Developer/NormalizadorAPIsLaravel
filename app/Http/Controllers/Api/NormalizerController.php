@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Services\ApiNormalizer\Adapters\Loader\YamlContractLoader;
+use App\Services\ApiNormalizer\Adapters\Loader\JsonContractLoader;
 use App\Services\ApiNormalizer\Adapters\Normalizer;
 use App\Services\ApiNormalizer\ApiNormalizerService;
 use App\Services\ApiNormalizer\Providers\MockAPI\MockAPIClient;
@@ -13,7 +13,7 @@ class NormalizerController extends Controller
 {
     public function parcelas (Request $request)
     {
-        $loader = new YamlContractLoader();
+        $loader = new JsonContractLoader();
         $normalizer = new Normalizer();
 
         $service = new ApiNormalizerService(
@@ -24,7 +24,7 @@ class NormalizerController extends Controller
             ]
         );
 
-        $contractFile = base_path() . '\app\Services\ApiNormalizer\Providers\MockAPI\Schemas\Parcelas.yml';
+        $contractFile = base_path() . '\app\Services\ApiNormalizer\Providers\MockAPI\Schemas\clientes.json';
 
         $result = $service->fetch('mockAPI', $contractFile, [
             'companyId' => 1,
@@ -35,7 +35,7 @@ class NormalizerController extends Controller
 
     public function parcelas_pagas (Request $request)
     {
-        $loader = new YamlContractLoader();
+        $loader = new JsonContractLoader();
         $normalizer = new Normalizer();
 
         $service = new ApiNormalizerService(

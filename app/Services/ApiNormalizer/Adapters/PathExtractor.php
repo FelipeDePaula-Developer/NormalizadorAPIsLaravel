@@ -9,22 +9,23 @@ final class PathExtractor
     {
     }
 
-    public function extractItems($rawResponse, $itemsPath, $root)
+    public function extractItems($rawResponse, $itemsPath, $root = '')
     {
+        //Quando o principal está vazio todo o array do elemento será usado como base
         $principalPath = $itemsPath['principalPath'];
         $complementPaths = $itemsPath['complementPath'];
-
-        if ($principalPath[0] != $root)
+        if (!empty($root))
             $rawResponse = $rawResponse[$root];
 
         $baseBody = [];
         foreach ($rawResponse as $item) {
-            $baseBody = $this->getItemByPath($item, $principalPath);
+            $baseBody = empty($principalPath) ? $rawResponse : $this->getItemByPath($item, $principalPath);
 
             if ($complementPaths !== []) {
                 $baseBody = array_merge($baseBody, $this->getItemByPath($item, $complementPaths, true));
             }
         }
+        dd($baseBody);
     }
 
     public function getItemByPath($item, $paths, $debug_complement = false, $nextPath = 0)
@@ -67,7 +68,6 @@ final class PathExtractor
                     if ($next_path)
                         continue;
                 }
-                dd($out);
             } else {
                 foreach ($item as $field => $value) {
                     if ($field == $path) {
