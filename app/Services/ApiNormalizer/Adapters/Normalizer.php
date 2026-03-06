@@ -7,15 +7,8 @@ final class Normalizer
 {
     public function normalizeItems(array $rawResponse, array $endpointContract, array $canonicalSchema): array
     {
-        $itemsPath = $endpointContract['response']['items_path'] ?? null;
-        if (!$itemsPath) {
-            throw new \RuntimeException("Contract sem response.items_path");
-        }
-
         $extractor = new PathExtractor();
-        $rawItems = $extractor->extractItems($rawResponse, $itemsPath, $endpointContract['response']['root']);
-        dd($rawItems);
-        die('AQ');
+        $rawItems = $extractor->extractItems($rawResponse, $endpointContract['response']['root']);
         $mappingFields = $endpointContract['mapping']['fields'] ?? [];
         if (!is_array($mappingFields)) $mappingFields = [];
 

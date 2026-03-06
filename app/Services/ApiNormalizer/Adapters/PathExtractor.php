@@ -9,74 +9,62 @@ final class PathExtractor
     {
     }
 
-    public function extractItems($rawResponse, $itemsPath, $root = '')
+    public function extractItems($rawResponse, $root = ''): array
     {
-        //Quando o principal está vazio todo o array do elemento será usado como base
-        $principalPath = $itemsPath['principalPath'];
-        $complementPaths = $itemsPath['complementPath'];
-        if (!empty($root))
+        if (!empty($root) && isset($rawResponse[$root])) {
             $rawResponse = $rawResponse[$root];
-
-        $baseBody = [];
-        foreach ($rawResponse as $item) {
-            $baseBody = empty($principalPath) ? $rawResponse : $this->getItemByPath($item, $principalPath);
-
-            if ($complementPaths !== []) {
-                $baseBody = array_merge($baseBody, $this->getItemByPath($item, $complementPaths, true));
-            }
         }
-        dd($baseBody);
+
+        // Se já for uma lista de itens
+        if (is_array($rawResponse) && !$this->isAssoc($rawResponse)) {
+            $result = [];
+
+            foreach ($rawResponse as $item) {
+                $result[] = $this->flattenArray($item);
+            }
+
+            return $result;
+        }
+
+        // Se for um único item associativo
+        return $this->flattenArray($rawResponse);
     }
 
-    public function getItemByPath($item, $paths, $debug_complement = false, $nextPath = 0)
+    private function flattenArray($data, $prefix = ''): array
     {
-        if ($debug_complement)
-            dump(func_get_args());
+        $result = [];
 
+        if (!is_array($data)) {
+            if ($prefix !== '') {
+                $result[$prefix] = $data;
+            }
+            return $result;
+        }
 
-        $out = [];
-        foreach ($paths as $path) {
-            if ($debug_complement)
-                dump($path);
+        foreach ($data as $key => $value) {
+            // Se a chave for numérica, usa índice humano (1,2,3...)
+            $currentKey = is_numeric($key) ? ((int) $key + 1) : $key;
 
-            if (is_array($path)) {
-                $total_path = count($path);
-                $temp_item = $item;
-                foreach ($path as $key => $subPath) {
-                    $next_path = false;
-                    foreach ($temp_item as $field => $value) {
-                        dump($temp_item);
-                        dump([$field => $subPath]);
-                        if ($subPath === '$n') {
-                            $temp_item = $this->getItemByPath($value, [$path[$key + 1]], true, 1);
-                            dd($temp_item);
-                            $next_path = true;
-                            break;
-                        }
+            $newPrefix = $prefix === ''
+                ? $currentKey
+                : $prefix . '_' . $currentKey;
 
-                        if ($field == $subPath) {
-                            if ($key < $total_path - 1) {
-                                $temp_item = $value;
-                                $next_path = true;
-                                break;
-                            }else{
-                                $out = $temp_item;
-                            }
-                        }
-                    }
-
-                    if ($next_path)
-                        continue;
-                }
+            if (is_array($value)) {
+                $result = array_merge($result, $this->flattenArray($value, $newPrefix));
             } else {
-                foreach ($item as $field => $value) {
-                    if ($field == $path) {
-                        $out = $value;
-                    }
-                }
+                $result[$newPrefix] = $value;
             }
         }
 
-        return $out;
+        return $result;
+    }
+
+    private function isAssoc(array $array): bool
+    {
+        if ($array === []) {
+            return false;
+        }
+
+        return array_keys($array) !== range(0, count($array) - 1);
     }
 }

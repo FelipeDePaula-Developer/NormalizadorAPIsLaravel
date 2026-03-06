@@ -3,16 +3,7 @@
     "path": "bulk-data-clients",
     "method": "GET",
     "response": {
-        "root": "data",
-        "items_path": {
-            "principalPath": [],
-            "complementPath": {
-                "0": ["contacts"],
-                "1": ["contacts", "$n" ,"phones"],
-                "2": ["address", "location"],
-                "4": ["metadata", "audit", "createdBy"]
-            }
-        }
+        "root": "data"
     },
     "canonical": {
         "entity": "Cliente",
